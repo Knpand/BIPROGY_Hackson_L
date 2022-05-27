@@ -15,9 +15,9 @@ $ git config --local core.hooksPath .github/hooks
 $ chmod -R +x .github/hooks
 ```
 
-### ## 仮想環境の構築
+### ## 環境構築
 
-#### 環境の作成
+#### 仮想環境の作成
 ```
 $ python3 -m venv venv
 ```
@@ -39,9 +39,26 @@ $ .\[newenvname]\Scripts\activate
 $ deactivate
 ```
 
+#### 環境変数の設定(.zshrcなどに書くと、ターミナルを閉じても環境変数が残る)
+##### Mac(zshの場合)
+```
+$ echo 'export FLASK_APP=api' >> ~/.zshrc
+$ echo 'export FLASK_ENV=development' >> ~/.zshrc
+$ source ~/.zshrc
+```
+
+##### Windows
+```
+$
+```
 #### パッケージのインストール
 ```
 $ pip install -r requirements.txt
 ```
 
 ※新たなパッケージを追加するときは`requirement.txt`に追記する．
+
+### ## 開発サーバーを起動
+```
+$ flask run
+```
