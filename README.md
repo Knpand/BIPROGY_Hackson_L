@@ -48,9 +48,15 @@ $ source ~/.zshrc
 ```
 
 ##### Windows
+[ユーザー環境変数を設定](https://proengineer.internous.co.jp/content/columnfeature/5205)
+
+↓ 設定する環境変数
 ```
-$
+FLASK_APP : api
+FLASK_ENV : development
 ```
+
+powershell上で`set`と打つと環境変数の一覧を表示できる．
 #### パッケージのインストール
 ```
 $ pip install -r requirements.txt
