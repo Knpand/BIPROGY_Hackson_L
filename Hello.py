@@ -3,18 +3,14 @@
 
 
 from flask import Flask
+import os
+
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def hello():
-    name = "Hello World"
-    return name
+    return "Hello, world!!"
 
-@app.route('/good')
-def good():
-    name = "Good"
-    return name
-
-## おまじない
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
