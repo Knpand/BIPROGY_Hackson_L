@@ -144,7 +144,7 @@ if __name__ == '__main__':
     # .strftime('%Y/%m/%d %H:%M')
     MTGobj=MeetingClass()
     meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","icebreak","icebreak_mt1@itresourcetech.net")
-    # meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","Biprogyaaa","f.kntr514@gmail.com")
+
 
     print(meetID)
 
