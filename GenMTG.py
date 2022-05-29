@@ -176,12 +176,13 @@ if __name__ == '__main__':
     # password=strinv[front_idx+1:-2]
 
 
-    # token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
-    # endpoint = "https://notify-api.line.me/api/notify"
-    # headers = {"Authorization": "Bearer " + token}
+    token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
+    endpoint = "https://notify-api.line.me/api/notify"
+    headers = {"Authorization": "Bearer " + token}
     # params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
 
     params=Get_mtgdata()
+    
     requests.post(endpoint, headers=headers, data=params)
     print(passcode)
     # pprint(invitation)
