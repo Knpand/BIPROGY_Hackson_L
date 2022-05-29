@@ -41,21 +41,21 @@ def callback():
     return 'OK'
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqldb://{}:{}@{}/{}?charset=utf8".format("root", "", "localhost", "test")
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqldb://{}:{}@{}/{}?charset=utf8".format("root", "", "localhost", "test")
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    line_id = db.Column(db.Text(), nullable=False)
-    line_name = db.Column(db.Text(), nullable=False)
-    mail =  db.Column(db.Text(), nullable=True)
-    state = db.Column(db.Integer, primary_key=True)
+# class User(db.Model):
+#     __tablename__ = 'users'
+#     id = db.Column(db.Integer, primary_key=True)
+#     line_id = db.Column(db.Text(), nullable=False)
+#     line_name = db.Column(db.Text(), nullable=False)
+#     mail =  db.Column(db.Text(), nullable=True)
+#     state = db.Column(db.Integer, primary_key=True)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
