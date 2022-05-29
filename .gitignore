@@ -139,3 +139,6 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+
+config.py
+local_config.py
