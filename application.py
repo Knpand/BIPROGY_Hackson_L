@@ -93,5 +93,4 @@ def notify():
     line_bot_api.broadcast(messages)
 
 if __name__ == "__main__":
-    port = os.getenv("PORT")
-    app.run(host="0.0.0.0",port=port)
+    app.run(host="0.0.0.0")
