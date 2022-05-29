@@ -9,7 +9,7 @@ import time
 import random
 from pprint import pprint
 from tzlocal import get_localzone
-
+import requests
 #
 # Meetingクラス
 #
@@ -136,17 +136,13 @@ class MeetingClass:
                                 headers=headers).json()
         return invitation
 
-if __name__ == '__main__':
+
+def Get_mtgdata():
     date=datetime.datetime.utcnow()
-    # .strftime('%Y/%m/%d %H:%M')
     MTGobj=MeetingClass()
     meetID=MTGobj.CreateMeeting("sample",date,30,'',"icebreak","icebreak_mt1@itresourcetech.net")
-    # meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","Biprogyaaa","f.kntr514@gmail.com")
-
-    print(meetID)
 
     invitation = MTGobj.GetInvitation(meetID)
-    print(invitation)
     strinv=invitation['invitation']
     front_idx=strinv.find('Zoomミーティングに参加する\r\n')+16
     back_idx=strinv.find('ミーティングID')-5
@@ -154,11 +150,38 @@ if __name__ == '__main__':
     front_idx=strinv.find('パスコード')+5
     password=strinv[front_idx+1:-2]
 
-    import requests
     token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
     endpoint = "https://notify-api.line.me/api/notify"
     headers = {"Authorization": "Bearer " + token}
     params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
+
+    return params
+
+if __name__ == '__main__':
+    # date=datetime.datetime.utcnow()
+    # # .strftime('%Y/%m/%d %H:%M')
+    # MTGobj=MeetingClass()
+    # meetID=MTGobj.CreateMeeting("sample",date,30,'',"icebreak","icebreak_mt1@itresourcetech.net")
+    # # meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","Biprogyaaa","f.kntr514@gmail.com")
+
+    # print(meetID)
+
+    # invitation = MTGobj.GetInvitation(meetID)
+    # print(invitation)
+    # strinv=invitation['invitation']
+    # front_idx=strinv.find('Zoomミーティングに参加する\r\n')+16
+    # back_idx=strinv.find('ミーティングID')-5
+    # url=strinv[front_idx+1:back_idx+1]
+    # front_idx=strinv.find('パスコード')+5
+    # password=strinv[front_idx+1:-2]
+
+
+    # token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
+    # endpoint = "https://notify-api.line.me/api/notify"
+    # headers = {"Authorization": "Bearer " + token}
+    # params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
+
+    params=Get_mtgdata()
     requests.post(endpoint, headers=headers, data=params)
     print(passcode)
     # pprint(invitation)
