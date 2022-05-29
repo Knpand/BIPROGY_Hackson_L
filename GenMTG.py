@@ -155,7 +155,7 @@ if __name__ == '__main__':
     password=strinv[front_idx+1:-2]
 
     import requests
-    token = "G2LNN3ApusueIRgPpvo3Urw1mXlVah7BoqA3RR3Dl8T"
+    token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
     endpoint = "https://notify-api.line.me/api/notify"
     headers = {"Authorization": "Bearer " + token}
     params = {"message": "Room_URL:"+url+"，ID:"+meetID+"，Password:"+password}
