@@ -158,7 +158,7 @@ if __name__ == '__main__':
     token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
     endpoint = "https://notify-api.line.me/api/notify"
     headers = {"Authorization": "Bearer " + token}
-    params = {"message": "Room_URL:"+url+"，ID:"+meetID+"，Password:"+password}
+    params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
     requests.post(endpoint, headers=headers, data=params)
     print(passcode)
     # pprint(invitation)
