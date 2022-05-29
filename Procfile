@@ -1,2 +1,2 @@
-web: python Hello.py
+web: python GenMTG.py
 

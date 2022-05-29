@@ -21,9 +21,9 @@ class MeetingClass:
     _meeting_json = None
 
     CONST_ZOOM_URL = ' https://api.zoom.us/v2'
-    CONST_ZOOM_API_KEY = ''                       #  APIキー
-    CONST_ZOOM_API_SECRET = ''      #  APIの秘密鍵
-    CONST_ZOOM_USER_ID = ''                           # 主催者のメールアドレス
+    CONST_ZOOM_API_KEY = 'SAHratP9Rz-Bx6nQDLNgFg'                       #  APIキー
+    CONST_ZOOM_API_SECRET = 's68fgSvETnCpK5MOsXpf5tLjKnfr48Bz6Kbz'      #  APIの秘密鍵
+    CONST_ZOOM_USER_ID = 'f.kntr514@gmail.com'                           # 主催者のメールアドレス
     CONST_ZOOM_TOKEN_EXPIRE_SEC = 600                                   # トークン有効期限：600秒
 
 
@@ -126,13 +126,10 @@ class MeetingClass:
     # #  リモート会議招待用テキスト取得メソッド
     # #
     def GetInvitation(self, meeting_id: int):
- 
         # リモート会議招待用テキスト取得のURLを生成
         end_point = f"/meetings/{meeting_id}/invitation"
- 
         #　トークンのタイムアウト値を指定し、リクエストヘッダを生成
         headers = self._GetHeaders(self.CONST_ZOOM_TOKEN_EXPIRE_SEC)
- 
         # リクエスト送信（取得：GET）
         invitation = requests.request("GET",
                                 self.CONST_ZOOM_URL + end_point,
@@ -143,10 +140,26 @@ if __name__ == '__main__':
     date=datetime.datetime.utcnow()
     # .strftime('%Y/%m/%d %H:%M')
     MTGobj=MeetingClass()
-    meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","icebreak","icebreak_mt1@itresourcetech.net")
-
+    meetID=MTGobj.CreateMeeting("sample",date,30,'',"icebreak","icebreak_mt1@itresourcetech.net")
+    # meetID=MTGobj.CreateMeeting("sample",date,30,"Biprogy123","Biprogyaaa","f.kntr514@gmail.com")
 
     print(meetID)
 
     invitation = MTGobj.GetInvitation(meetID)
-    pprint(invitation)
+    print(invitation)
+    strinv=invitation['invitation']
+    front_idx=strinv.find('Zoomミーティングに参加する\r\n')+16
+    back_idx=strinv.find('ミーティングID')-5
+    url=strinv[front_idx+1:back_idx+1]
+    front_idx=strinv.find('パスコード')+5
+    password=strinv[front_idx+1:-2]
+
+    import requests
+    token = "G2LNN3ApusueIRgPpvo3Urw1mXlVah7BoqA3RR3Dl8T"
+    endpoint = "https://notify-api.line.me/api/notify"
+    headers = {"Authorization": "Bearer " + token}
+    params = {"message": "Room_URL:"+url+"，ID:"+meetID+"，Password:"+password}
+    requests.post(endpoint, headers=headers, data=params)
+    print(passcode)
+    # pprint(invitation)
+    # print(front_idx)
