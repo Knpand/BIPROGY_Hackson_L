@@ -20,14 +20,12 @@ class MeetingClass:
     _meeting_uuid = None
     _meeting_json = None
 
-    CONST_ZOOM_URL = ' https://api.zoom.us/v2'
-    CONST_ZOOM_API_KEY = 'SAHratP9Rz-Bx6nQDLNgFg'                       #  APIキー
-    CONST_ZOOM_API_SECRET = 's68fgSvETnCpK5MOsXpf5tLjKnfr48Bz6Kbz'      #  APIの秘密鍵
-    CONST_ZOOM_USER_ID = 'f.kntr514@gmail.com'                           # 主催者のメールアドレス
+    CONST_ZOOM_URL = ''
+    CONST_ZOOM_API_KEY = ''                       #  APIキー
+    CONST_ZOOM_API_SECRET = ''      #  APIの秘密鍵
+    CONST_ZOOM_USER_ID = ''                           # 主催者のメールアドレス
     CONST_ZOOM_TOKEN_EXPIRE_SEC = 600                                   # トークン有効期限：600秒
 
-
-    # トークン（JWT）作成メソッド
     def _GenerateToken(self,expire_sec):
         header = {"alg": "HS256", "typ": "JWT"}
         payload = {"iss": self.CONST_ZOOM_API_KEY, "exp": int(time.time() + expire_sec)}
@@ -126,10 +124,13 @@ class MeetingClass:
     # #  リモート会議招待用テキスト取得メソッド
     # #
     def GetInvitation(self, meeting_id: int):
+ 
         # リモート会議招待用テキスト取得のURLを生成
         end_point = f"/meetings/{meeting_id}/invitation"
+ 
         #　トークンのタイムアウト値を指定し、リクエストヘッダを生成
         headers = self._GetHeaders(self.CONST_ZOOM_TOKEN_EXPIRE_SEC)
+ 
         # リクエスト送信（取得：GET）
         invitation = requests.request("GET",
                                 self.CONST_ZOOM_URL + end_point,
@@ -137,25 +138,27 @@ class MeetingClass:
         return invitation
 
 
-def Get_mtgdata():
-    date=datetime.datetime.utcnow()
-    MTGobj=MeetingClass()
-    meetID=MTGobj.CreateMeeting("sample",date,30,'',"icebreak","icebreak_mt1@itresourcetech.net")
 
-    invitation = MTGobj.GetInvitation(meetID)
-    strinv=invitation['invitation']
-    front_idx=strinv.find('Zoomミーティングに参加する\r\n')+16
-    back_idx=strinv.find('ミーティングID')-5
-    url=strinv[front_idx+1:back_idx+1]
-    front_idx=strinv.find('パスコード')+5
-    password=strinv[front_idx+1:-2]
+    def Get_mtgdata(self):
+        date=datetime.datetime.utcnow()
+        MTGobj=MeetingClass()
+        meetID=MTGobj.CreateMeeting("sample",date,30,'',"icebreak","icebreak_mt1@itresourcetech.net")
 
-    token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
-    endpoint = "https://notify-api.line.me/api/notify"
-    headers = {"Authorization": "Bearer " + token}
-    params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
+        invitation = MTGobj.GetInvitation(meetID)
+        print(invitation)
+        strinv=invitation['invitation']
+        front_idx=strinv.find('Zoomミーティングに参加する\r\n')+16
+        back_idx=strinv.find('ミーティングID')-5
+        url=strinv[front_idx+1:back_idx+1]
+        front_idx=strinv.find('パスコード')+5
+        password=strinv[front_idx+1:-2]
 
-    return params
+        token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
+        endpoint = "https://notify-api.line.me/api/notify"
+        headers = {"Authorization": "Bearer " + token}
+        params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
+
+        return str(url)
 
 if __name__ == '__main__':
     # date=datetime.datetime.utcnow()
@@ -176,14 +179,14 @@ if __name__ == '__main__':
     # password=strinv[front_idx+1:-2]
 
 
-    token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
-    endpoint = "https://notify-api.line.me/api/notify"
-    headers = {"Authorization": "Bearer " + token}
+    # token = "p1HImr3hqeWJsIwd7r8R7MfQkyFgofhElyeR4MUwHWK"
+    # endpoint = "https://notify-api.line.me/api/notify"
+    # headers = {"Authorization": "Bearer " + token}
     # params = {"message": "Room_URL:"+str(url)+"，ID:"+str(meetID)+"，Password:"+str(password)}
+    a=MeetingClass()
+    params=a.Get_mtgdata()
 
-    params=Get_mtgdata()
-    
-    requests.post(endpoint, headers=headers, data=params)
-    print(passcode)
+    # requests.post(endpoint, headers=headers, data=params)
+    print(params)
     # pprint(invitation)
     # print(front_idx)
