@@ -1,5 +1,5 @@
 import requests
-token = "G2LNN3ApusueIRgPpvo3Urw1mXlVah7BoqA3RR3Dl8T"
+token = "アプリのTOKENを入力"
 endpoint = "https://notify-api.line.me/api/notify"
 headers = {"Authorization": "Bearer " + token}
 params = {"message": "test message"}
